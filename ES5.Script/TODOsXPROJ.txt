@@ -1,15 +1,17 @@
 ﻿SILVERLIGHT
 
-,
+https://github.com/dotnet/cli/issues/584
+
         "sl5": {
             "compilationOptions": {
                 "define": [ "SILVERLIGHT" ]
             }
         }
 
-#if DNX try to port it to  .NET Core
+Still have some changes in Reflection API in progress, because of that for now I will stop this
 
-,
+#if DNX try to port it to .NET Core
+
         "dotnet5.4": {
             "dependencies": {
                 "Microsoft.CSharp": "4.0.1-beta-23516",
