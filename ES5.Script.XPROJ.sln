@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{89AE2010-8E63-497B-8D6A-8742EA1AF363}"
+	ProjectSection(SolutionItems) = preProject
+		Doc\Ecma-262-5.1.pdf = Doc\Ecma-262-5.1.pdf
+		Doc\Ecma-262-6.pdf = Doc\Ecma-262-6.pdf
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ES5.Script", "ES5.Script\ES5.Script.xproj", "{E0FAA0B4-8F71-475C-B886-1190FE1459C6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E0FAA0B4-8F71-475C-B886-1190FE1459C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0FAA0B4-8F71-475C-B886-1190FE1459C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0FAA0B4-8F71-475C-B886-1190FE1459C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0FAA0B4-8F71-475C-B886-1190FE1459C6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
