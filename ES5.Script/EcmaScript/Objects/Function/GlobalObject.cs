@@ -34,7 +34,7 @@ namespace ES5.Script.EcmaScript.Objects
             var lNames = "";
             var lBody = "";
             if (args.Length != 0) {
-                for (int i = 0, l = args.Length - 2; i < l; i++)
+                for (int i = 0, l = args.Length - 1; i < l; i++)
                 {
                     if (i == 0) lNames = Utilities.GetArgAsString(args, i, aCaller);
                     else
@@ -85,15 +85,21 @@ namespace ES5.Script.EcmaScript.Objects
             // var lFunc = new FunctionDeclarationElement(lCode.PositionPair, FunctionDeclarationType.None, null, lParams, lCode);
             var lFunc = new FunctionDeclarationElement(lCode.PositionPair, FunctionDeclarationType.None, null, lParams, lCode.Items);
 
+            var lPrev = fParser.fLastData;
+            fParser.fLastData = lBody;
             try
             {
                 var func = (InternalFunctionDelegate)fParser.Parse(lFunc, false, null, lCode.Items);
                 return new EcmaScriptInternalFunctionObject(this, fParser.fRoot, null, func, lFunc.Parameters.Count, lBody, aCaller.Strict);
             }
-            catch(ScriptParsingException ex)
+            catch (ScriptParsingException ex)
             {
                 RaiseNativeError(NativeErrorType.SyntaxError, ex.Message);
                 return null;
+            }
+            finally
+            {
+                fParser.fLastData = lPrev;
             }
         }
 

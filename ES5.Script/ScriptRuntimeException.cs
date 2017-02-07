@@ -59,7 +59,7 @@ namespace ES5.Script
         public static object Unwrap(object arg)
         {
             var e = arg as ScriptRuntimeException;
-            if (arg != null)
+            if (e != null)
                 return e.Original;
 
             return arg;
