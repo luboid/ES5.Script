@@ -182,21 +182,70 @@ namespace ES5.Script.EcmaScript.Objects
         public object StringReplace(ExecutionContext aCaller, object aSelf, params object[] args)
         {
             var lSelf = Utilities.GetObjAsString(aSelf, aCaller) ?? string.Empty;
+            if (0 == args.Length)
+                return lSelf;
 
+            var lNewValue = (string)null;
+            var lCallBack = Utilities.GetArg(args, 1) as EcmaScriptInternalFunctionObject;
 
-            var lNewValue = Utilities.GetArgAsString(args, 1, aCaller) ?? string.Empty;
+            if (null == lCallBack)
+                lNewValue = Utilities.GetArgAsString(args, 1, aCaller) ?? string.Empty;
 
             var lPattern = args[0] as EcmaScriptRegexpObject;
-            if (lPattern == null)
+            if (lPattern == null && lCallBack == null)
+            {
+                // this will replace all occurence
                 return lSelf.Replace(Utilities.GetArgAsString(args, 0, aCaller), lNewValue);
+            }
 
+            if (lPattern == null && lCallBack != null)
+            {
+                lPattern = new EcmaScriptRegexpObject(aCaller.Global, Utilities.GetArgAsString(args, 0, aCaller), string.Empty);
+            }
 
-            if (lPattern.GlobalVal)
-                return (lPattern.Regex.Replace(lSelf, lNewValue));
+            if (lCallBack != null)
+            {
+                object[] lCallBackArgs = null; int groups = 0;
+                MatchEvaluator evaluator = (Match match) =>
+                {
+                    if (null == lCallBackArgs)
+                    {
+                        groups = match.Groups.Count;
+                        lCallBackArgs = new object[groups + 2];
+                        lCallBackArgs[lCallBackArgs.Length - 1] = lSelf;
+                    }
 
-            return (lPattern.Regex.Replace(lSelf, lNewValue, 1));
+                    for (var i = 0; i < groups; i++)
+                    {
+                        if (i == 0)
+                        {
+                            lCallBackArgs[lCallBackArgs.Length - 2] = match.Groups[i].Index;
+                        }
+                        lCallBackArgs[i] = match.Groups[i].Success ? (object)match.Groups[i].Value : Undefined.Instance;
+                    }
+
+                    var replacment = Utilities.GetObjAsString(lCallBack.CallEx(aCaller, aCaller.Global, lCallBackArgs), aCaller);
+
+                    return replacment;
+                };
+
+                if (lPattern.GlobalVal)
+                {
+                    return lPattern.Regex.Replace(lSelf, evaluator);
+                }
+                else
+                {
+                    return lPattern.Regex.Replace(lSelf, evaluator, 1);
+                }
+            }
+            else
+            {
+                if (lPattern.GlobalVal)
+                    return (lPattern.Regex.Replace(lSelf, lNewValue));
+                else
+                    return (lPattern.Regex.Replace(lSelf, lNewValue, 1));
+            }
         }
-
 
         public object StringSlice(ExecutionContext aCaller, object aSelf, params object[] args)
         {
