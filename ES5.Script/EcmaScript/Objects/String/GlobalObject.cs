@@ -9,6 +9,8 @@ namespace ES5.Script.EcmaScript.Objects
 {
     public partial class GlobalObject : EcmaScriptObject
     {
+        static Regex StringReplacementPlaceHolders = new Regex("(\\$[`'&])|(\\$([1-9]{1}(?![0-9])|[0-9]{2}))", RegexOptions.Compiled);
+
         public EcmaScriptObject CreateString()
         {
             var result = Get("String") as EcmaScriptObject;
@@ -178,73 +180,160 @@ namespace ES5.Script.EcmaScript.Objects
             return (lSelf.LastIndexOf(lNeedle, lIndex));
         }
 
-
         public object StringReplace(ExecutionContext aCaller, object aSelf, params object[] args)
         {
             var lSelf = Utilities.GetObjAsString(aSelf, aCaller) ?? string.Empty;
             if (0 == args.Length)
                 return lSelf;
 
-            var lNewValue = (string)null;
+            var lNewValue = (string)null; var lReplacementPlaceHolders = (List<Match>)null;
             var lCallBack = Utilities.GetArg(args, 1) as EcmaScriptInternalFunctionObject;
-
             if (null == lCallBack)
                 lNewValue = Utilities.GetArgAsString(args, 1, aCaller) ?? string.Empty;
 
             var lPattern = args[0] as EcmaScriptRegexpObject;
-            if (lPattern == null && lCallBack == null)
+
+            if (lNewValue != null && !string.IsNullOrWhiteSpace(lNewValue))
             {
-                // this will replace all occurence
-                return lSelf.Replace(Utilities.GetArgAsString(args, 0, aCaller), lNewValue);
+                lReplacementPlaceHolders = ExtractMatchPlaceHolders(lNewValue);
             }
 
-            if (lPattern == null && lCallBack != null)
+            if (lPattern == null && (lCallBack != null || lReplacementPlaceHolders != null))
             {
                 lPattern = new EcmaScriptRegexpObject(aCaller.Global, Utilities.GetArgAsString(args, 0, aCaller), string.Empty);
             }
 
-            if (lCallBack != null)
+            if (lCallBack != null || lReplacementPlaceHolders != null)
             {
-                object[] lCallBackArgs = null; int groups = 0;
-                MatchEvaluator evaluator = (Match match) =>
+                MatchEvaluator lEvaluator = null;
+                if (lReplacementPlaceHolders == null)
                 {
-                    if (null == lCallBackArgs)
-                    {
-                        groups = match.Groups.Count;
-                        lCallBackArgs = new object[groups + 2];
-                        lCallBackArgs[lCallBackArgs.Length - 1] = lSelf;
-                    }
-
-                    for (var i = 0; i < groups; i++)
-                    {
-                        if (i == 0)
+                    object[] lCallBackArgs = null; int groups = 0;
+                    lEvaluator = (Match match) =>
                         {
-                            lCallBackArgs[lCallBackArgs.Length - 2] = match.Groups[i].Index;
-                        }
-                        lCallBackArgs[i] = match.Groups[i].Success ? (object)match.Groups[i].Value : Undefined.Instance;
-                    }
+                            if (null == lCallBackArgs)
+                            {
+                                groups = match.Groups.Count;
+                                lCallBackArgs = new object[groups + 2];
+                                lCallBackArgs[lCallBackArgs.Length - 1] = lSelf;
+                            }
 
-                    var replacment = Utilities.GetObjAsString(lCallBack.CallEx(aCaller, aCaller.Global, lCallBackArgs), aCaller);
+                            for (var i = 0; i < groups; i++)
+                            {
+                                if (i == 0)
+                                {
+                                    lCallBackArgs[lCallBackArgs.Length - 2] = match.Groups[i].Index;
+                                }
+                                lCallBackArgs[i] = match.Groups[i].Success ? (object)match.Groups[i].Value : Undefined.Instance;
+                            }
 
-                    return replacment;
-                };
+                            var replacment = Utilities.GetObjAsString(lCallBack.CallEx(aCaller, aCaller.Global, lCallBackArgs), aCaller);
 
-                if (lPattern.GlobalVal)
-                {
-                    return lPattern.Regex.Replace(lSelf, evaluator);
+                            return replacment;
+                        };
                 }
                 else
                 {
-                    return lPattern.Regex.Replace(lSelf, evaluator, 1);
+                    var text = new StringBuilder(); var lSelfIndex = 0;
+                    lEvaluator = (Match match) =>
+                    {
+                        text.Length = 0;
+                        var index = 0; var matchIndex = 0; var matchCount = match.Groups.Count;
+                        foreach (var m in lReplacementPlaceHolders)
+                        {
+                            text.Append(lNewValue.Substring(index, m.Index - index).Replace("$$", "$"));//and remove escape symbols
+                            switch (m.Value)
+                            {
+                                case "$`"://Inserts the portion of the string that precedes the matched substring.
+                                    text.Append(lSelf.Substring(0, match.Index));
+                                    break;
+                                case "$'"://Inserts the portion of the string that follows the matched substring.
+                                    index = match.Index + match.Value.Length;
+                                    if (index < lSelf.Length)
+                                    {
+                                        text.Append(lSelf.Substring(index));
+                                    }
+                                    break;
+                                case "$&":
+                                    text.Append(match.Groups[0].Value);
+                                    break;
+                                default:
+                                    matchIndex = int.Parse(m.Value.Substring(1));
+                                    if (matchIndex < matchCount)
+                                    {
+                                        text.Append(match.Groups[matchIndex].Value);
+                                    }
+                                    break;
+                            }
+                            index = m.Index + m.Value.Length;
+                        }
+
+                        if (index < lNewValue.Length)
+                        {
+                            text.Append(lNewValue.Substring(index).Replace("$$", "$"));//and remove escape symbols
+                        }
+
+                        lSelfIndex = match.Groups[0].Index + match.Groups[0].Value.Length;
+
+                        return text.ToString();
+                    };
                 }
+
+                if (lPattern.GlobalVal)
+                {
+                    lSelf = lPattern.Regex.Replace(lSelf, lEvaluator);
+                }
+                else
+                {
+                    lSelf = lPattern.Regex.Replace(lSelf, lEvaluator, 1);
+                }
+                return lSelf;
             }
             else
             {
+                if (lPattern == null)
+                {
+                    // this will replace all occurrence
+                    return lSelf.Replace(Utilities.GetArgAsString(args, 0, aCaller), lNewValue);
+                }
+
                 if (lPattern.GlobalVal)
                     return (lPattern.Regex.Replace(lSelf, lNewValue));
                 else
                     return (lPattern.Regex.Replace(lSelf, lNewValue, 1));
             }
+        }
+
+        static List<Match> ExtractMatchPlaceHolders(string value)
+        {
+            var replacementPlaceHolders = (List<Match>)null;
+            foreach (Match m in StringReplacementPlaceHolders.Matches(value))
+            {
+                if (m.Success)
+                {
+                    var i = m.Index; int count = 1; int result = 0;
+                    while (i > 0)
+                    {
+                        --i;
+                        if (value[i] != '$')
+                        {
+                            break;
+                        }
+                        ++count;
+                    }
+
+                    Math.DivRem(count, 2, out result);
+                    if (result != 0)
+                    {
+                        if (null == replacementPlaceHolders)
+                        {
+                            replacementPlaceHolders = new List<Match>();
+                        }
+                        replacementPlaceHolders.Add(m);
+                    }
+                }
+            }
+            return replacementPlaceHolders;
         }
 
         public object StringSlice(ExecutionContext aCaller, object aSelf, params object[] args)
