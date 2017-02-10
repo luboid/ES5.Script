@@ -180,32 +180,55 @@ namespace ES5.Script.EcmaScript.Objects
             return (lSelf.LastIndexOf(lNeedle, lIndex));
         }
 
+        static string FixRexExpSymbols(string pattern)
+        {
+            if (string.IsNullOrWhiteSpace(pattern))
+            {
+                return pattern ?? string.Empty;
+            }
+
+            string[] symbols = new[] { "\\", "[", "]", "^", "!", "|", "$", "?", "=", "{", "}", "+", "*", "(", ")" };
+            for (int i = 0, l = symbols.Length; i < l; i++)
+            {
+                pattern = pattern.Replace(symbols[i], "\\" + symbols[i]);
+            }
+            return pattern;
+        }
+
         public object StringReplace(ExecutionContext aCaller, object aSelf, params object[] args)
         {
+            MatchEvaluator lEvaluator = null;
+            string lNewValue = null; List<Match> lReplacementPlaceHolders = null;
             var lSelf = Utilities.GetObjAsString(aSelf, aCaller) ?? string.Empty;
             if (0 == args.Length)
+            {
                 return lSelf;
+            }
 
-            var lNewValue = (string)null; var lReplacementPlaceHolders = (List<Match>)null;
-            var lCallBack = Utilities.GetArg(args, 1) as EcmaScriptInternalFunctionObject;
+            var arg_0 = Utilities.GetArg(args, 0);
+            if (null == arg_0 || Undefined.Instance == arg_0)
+            {
+                return lSelf;
+            }
+
+            var arg_1 = Utilities.GetArg(args, 1);
+            var lCallBack = arg_1 as EcmaScriptInternalFunctionObject;
             if (null == lCallBack)
-                lNewValue = Utilities.GetArgAsString(args, 1, aCaller) ?? string.Empty;
+                lNewValue = Utilities.GetObjAsString(arg_1, aCaller) ?? string.Empty;
 
-            var lPattern = args[0] as EcmaScriptRegexpObject;
-
-            if (lNewValue != null && !string.IsNullOrWhiteSpace(lNewValue))
+            if (!string.IsNullOrWhiteSpace(lNewValue))
             {
                 lReplacementPlaceHolders = ExtractMatchPlaceHolders(lNewValue);
             }
 
+            var lPattern = arg_0 as EcmaScriptRegexpObject;
             if (lPattern == null && (lCallBack != null || lReplacementPlaceHolders != null))
             {
-                lPattern = new EcmaScriptRegexpObject(aCaller.Global, Utilities.GetArgAsString(args, 0, aCaller), string.Empty);
+                lPattern = new EcmaScriptRegexpObject(aCaller.Global, FixRexExpSymbols(Utilities.GetObjAsString(arg_0, aCaller)), string.Empty);
             }
 
             if (lCallBack != null || lReplacementPlaceHolders != null)
             {
-                MatchEvaluator lEvaluator = null;
                 if (lReplacementPlaceHolders == null)
                 {
                     object[] lCallBackArgs = null; int groups = 0;
@@ -294,7 +317,7 @@ namespace ES5.Script.EcmaScript.Objects
                 if (lPattern == null)
                 {
                     // this will replace all occurrence
-                    return lSelf.Replace(Utilities.GetArgAsString(args, 0, aCaller), lNewValue);
+                    return lSelf.Replace(Utilities.GetObjAsString(arg_0, aCaller), lNewValue);
                 }
 
                 if (lPattern.GlobalVal)
