@@ -83,9 +83,10 @@ namespace es5Conform
                 @"chapter15\15.4\15.4.4\15.4.4.16\15.4.4.16-8-10.js",
                 @"chapter15\15.4\15.4.4\15.4.4.14\15.4.4.14-9.a-1.js"
             };*/
-            string result; var c = 0; var o = 0; var f = 0;
-            using (var fail = XmlWriter.Create(Path.GetFullPath("fail.xml")))
-            using (var success = XmlWriter.Create(Path.GetFullPath("success.xml")))
+            var testResult = false;
+            string result; var c = 0; var o = 0; var f = 0; var settings = new XmlWriterSettings { NewLineOnAttributes = true, Indent = true };
+            using (var fail = XmlWriter.Create(Path.GetFullPath("fail.xml"), settings))
+            using (var success = XmlWriter.Create(Path.GetFullPath("success.xml"), settings))
             {
                 fail.WriteStartElement("tests");
                 success.WriteStartElement("tests");
@@ -106,19 +107,19 @@ namespace es5Conform
                             if (result == null /*|| Array.IndexOf<string>(okTests, test) > -1*/)
                             {
                                 ++o;
-                                success.WriteResult(test, null, DateTime.Now.Subtract(d0));
+                                success.WriteResult(test, null, DateTime.Now.Subtract(d0), testResult);
                             }
                             else
                             {
                                 ++f;
-                                fail.WriteResult(test, result, DateTime.Now.Subtract(d0));
+                                fail.WriteResult(test, result, DateTime.Now.Subtract(d0), testResult);
                             }
                         }
                         catch (Exception ex)
                         {
                             ++f;
                             Console.WriteLine("{1}:{2}", DateTime.Now.Subtract(d0), "break");
-                            fail.WriteResult(test, ex.ToString(), DateTime.Now.Subtract(d0));
+                            fail.WriteResult(test, ex.ToString(), DateTime.Now.Subtract(d0), testResult);
                         }
                     }
                 }

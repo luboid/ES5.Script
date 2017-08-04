@@ -13,6 +13,7 @@ namespace es5Conform
 {
     class Program
     {
+        static string fPath;
         static string fE5Root;
         static string fTestRoot;
         static string fLibrary;
@@ -20,10 +21,15 @@ namespace es5Conform
 
         static Program()
         {
-            var lPath = new Uri(typeof(Program).Assembly.EscapedCodeBase).LocalPath;
+            fPath = Path.GetDirectoryName(new Uri(typeof(Program).Assembly.EscapedCodeBase).LocalPath);
+#if NETCOREAPP2_0
+            fE5Root = "..\\..\\..\\..";
+#else
+            fE5Root = "..\\..\\..";
+#endif
 
-            fE5Root = Path.GetFullPath(Path.Combine(Path.Combine(Path.Combine(Path.GetDirectoryName(lPath),
-                "..\\..\\.."), "TestScripts"), "es5conform"));
+            fE5Root = Path.GetFullPath(Path.Combine(Path.Combine(Path.Combine(fPath,
+                fE5Root), "TestScripts"), "es5conform"));
 
             fTestRoot = Path.Combine(fE5Root, "TestCases");
 
@@ -84,18 +90,19 @@ namespace es5Conform
                 @"chapter15\15.4\15.4.4\15.4.4.16\15.4.4.16-8-10.js",
                 @"chapter15\15.4\15.4.4\15.4.4.14\15.4.4.14-9.a-1.js"
             };*/
-            string result; var c = 0; var o = 0; var f = 0;
-            using (var fail = XmlWriter.Create(Path.GetFullPath("fail.xml")))
-            using (var success = XmlWriter.Create(Path.GetFullPath("success.xml")))
+            var testResult = false;
+            string result; var c = 0; var o = 0; var f = 0; var settings = new XmlWriterSettings { NewLineOnAttributes = true, Indent = true };
+            using (var fail = XmlWriter.Create(Path.Combine(fPath, "fail.xml"), settings))
+            using (var success = XmlWriter.Create(Path.Combine(fPath, "success.xml"), settings))
             {
                 fail.WriteStartElement("tests");
                 success.WriteStartElement("tests");
                 try
                 {
-                    /*foreach (var test in new[] {
-                        @"chapter15\15.2\15.2.3\15.2.3.4\15.2.3.4-4-23.js"
-                    })*/
-                    foreach (var test in EnumerateTests(fTestRoot))
+                    foreach (var test in new[] {
+                        @"chapter11\11.4\11.4.1\11.4.1-4.a-10.js"
+                    })
+                    //foreach (var test in EnumerateTests(fTestRoot))
                     {
                         ++c;
                         Console.Write("{0}", test);
@@ -107,19 +114,19 @@ namespace es5Conform
                             if (result == null /*|| Array.IndexOf<string>(okTests, test) > -1*/)
                             {
                                 ++o;
-                                success.WriteResult(test, null, DateTime.Now.Subtract(d0));
+                                success.WriteResult(test, null, DateTime.Now.Subtract(d0), testResult);
                             }
                             else
                             {
                                 ++f;
-                                fail.WriteResult(test, result, DateTime.Now.Subtract(d0));
+                                fail.WriteResult(test, result, DateTime.Now.Subtract(d0), testResult);
                             }
                         }
                         catch (Exception ex)
                         {
                             ++f;
                             Console.WriteLine("{1}:{2}", DateTime.Now.Subtract(d0), "break");
-                            fail.WriteResult(test, ex.ToString(), DateTime.Now.Subtract(d0));
+                            fail.WriteResult(test, ex.ToString(), DateTime.Now.Subtract(d0), testResult);
                         }
                     }
                 }

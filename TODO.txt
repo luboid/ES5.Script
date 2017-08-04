@@ -1,5 +1,3 @@
-Somewhere !!!
-
 Add Debugging information
 http://blogs.msdn.com/b/jmstall/archive/2005/02/03/366429.aspx
 Tools
@@ -9,3 +7,13 @@ http://blogs.msdn.com/b/haibo_luo/archive/2005/10/25/484861.aspx
 WinDbg
 http://www.windbg.org/
 http://blogs.msdn.com/b/yirutang/archive/2005/05/26/422373.aspx
+
+.Net Core 2
+
+Exists problem with running scripts containing :
+
+try {
+
+} finaly {
+
+}

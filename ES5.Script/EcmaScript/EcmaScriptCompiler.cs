@@ -376,6 +376,11 @@ namespace ES5.Script.EcmaScript
                 fLocals = lOldLocals;
                 fBreak = lOldBreak;
                 fContinue = lOldContinue;
+
+#if DEBUG
+                var data = ClrTest.Reflection.ObjectSource.GetData(lMethod);
+#endif
+
                 if (aFunction != null)
                     return lMethod.CreateDelegate(typeof(InternalFunctionDelegate));
                 return lMethod.CreateDelegate(typeof(InternalDelegate));

@@ -234,7 +234,7 @@ namespace ES5.Script
 
         public event EventHandler<ScriptDebugEventArgs>  DebugFrameEnter;
         public event EventHandler<ScriptDebugExitScopeEventArgs>  DebugFrameExit;
-        public event EventHandler<ScriptDebugEventArgs> DebugThreadExit;
+        //public event EventHandler<ScriptDebugEventArgs> DebugThreadExit;
         public event EventHandler<ScriptDebugEventArgs> DebugTracePoint;
         public event EventHandler<ScriptDebugEventArgs> DebugDebugger;
         public event EventHandler<ScriptDebugEventArgs> DebugException;

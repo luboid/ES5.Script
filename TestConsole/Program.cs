@@ -1,5 +1,4 @@
 ﻿using ES5.Script;
-//using RemObjects.Script;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,37 +10,26 @@ namespace TestConsole
     class Program
     {
 
-        static void CallTest(string script, bool expectedResult)
+        static void CallTest()
         {
-            script = @"
-function testFunction1(cc) {
-    var o = "+script+@";
-    cc.propBoolean = new Boolean(o);
-}
-
-function testFunction2(cc) {
-    var o = "+script+@";
-    cc.propBoolean = o;
-}
-";
-
-            var lConsole = new ScriptTestConsole();
             using (var engine = new EcmaScriptComponent())
             {
-                engine.Include("test", script);
+                engine.Include("test", @"
 
-                //engine.RunFunction("testFunction1", lConsole);
+function test() {
+  try {
+      var o = JSON.stringify;
+      var d = delete JSON.stringify;
+      if (d === true && JSON.stringify === undefined) {
+        return true;
+      }
+  } finally {
+    JSON.stringify = o;
+  }
+}
 
-                //if (expectedResult != lConsole.propBoolean)
-                //{
-                //    throw new ApplicationException(string.Format("1.Script is \"{0}\" is not equal to {1}", script, expectedResult));
-                //}
-
-                engine.RunFunction("testFunction2", lConsole);
-                if (expectedResult != lConsole.propBoolean)
-                {
-                    throw new ApplicationException(string.Format("2.Script is \"{0}\" is not equal to {1}", script, expectedResult));
-                }
+");
+                engine.RunFunction("test");
             }
         }
 
@@ -49,7 +37,7 @@ function testFunction2(cc) {
         {
             try
             {
-                CallTest("{}", true);
+                CallTest();
             }
             catch (Exception ex)
             {

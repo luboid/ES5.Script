@@ -197,7 +197,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ReadMe.txt" />
+    <ProjectReference Include="..\ILReader\DmILReader.csproj">
+      <Project>{3c0543d2-3a32-432b-8af8-c971337bac2d}</Project>
+      <Name>DmILReader</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
