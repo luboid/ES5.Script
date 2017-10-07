@@ -1,0 +1,228 @@
+DynamicMethod
+System.Object test(ES5.Script.EcmaScript.ExecutionContext, System.Object, System.Object[], ES5.Script.EcmaScript.Objects.EcmaScriptInternalFunctionObject)
+Try fix labels: succeed
+
+IL_0000: /* 02  |          */ ldarg.0    
+IL_0001: /* 28  | 06000002 */ call       ES5.Script.EcmaScript.EnvironmentRecord get_LexicalScope()/ES5.Script.EcmaScript.ExecutionContext
+IL_0006: /* 02  |          */ ldarg.0    
+IL_0007: /* 28  | 06000003 */ call       ES5.Script.EcmaScript.Objects.GlobalObject get_Global()/ES5.Script.EcmaScript.ExecutionContext
+IL_000c: /* 73  | 06000004 */ newobj     Void .ctor(ES5.Script.EcmaScript.EnvironmentRecord, ES5.Script.EcmaScript.Objects.GlobalObject)/ES5.Script.EcmaScript.DeclarativeEnvironmentRecord
+IL_0011: /* 20  | 00000000 */ ldc.i4     0
+IL_0016: /* 73  | 06000005 */ newobj     Void .ctor(ES5.Script.EcmaScript.EnvironmentRecord, Boolean)/ES5.Script.EcmaScript.ExecutionContext
+IL_001b: /* 0a  |          */ stloc.0    
+IL_001c: /* 06  |          */ ldloc.0    
+IL_001d: /* 04  |          */ ldarg.2    
+IL_001e: /* 20  | 00000000 */ ldc.i4     0
+IL_0023: /* 8d  | 02000006 */ newarr     System.String
+IL_0028: /* fe09| 0003     */ ldarg      V_3
+IL_002c: /* 00  |          */ nop        
+IL_002d: /* 00  |          */ nop        
+IL_002e: /* 20  | 00000000 */ ldc.i4     0
+IL_0033: /* 73  | 06000007 */ newobj     Void .ctor(ES5.Script.EcmaScript.ExecutionContext, System.Object[], System.String[], ES5.Script.EcmaScript.Objects.EcmaScriptInternalFunctionObject, Boolean)/ES5.Script.EcmaScript.Objects.EcmaScriptArgumentObject
+IL_0038: /* 72  | 70000008 */ ldstr      "arguments"
+IL_003d: /* 06  |          */ ldloc.0    
+IL_003e: /* 28  | 06000009 */ call       ES5.Script.EcmaScript.EnvironmentRecord get_VariableScope()/ES5.Script.EcmaScript.ExecutionContext
+IL_0043: /* 20  | 00000000 */ ldc.i4     0
+IL_0048: /* 16  |          */ ldc.i4.0   
+IL_0049: /* 28  | 0600000A */ call       Void CreateAndSetMutableBindingNoFail(System.Object, System.String, ES5.Script.EcmaScript.EnvironmentRecord, Boolean, Boolean)/ES5.Script.EcmaScript.EnvironmentRecord
+IL_004e: /* 03  |          */ ldarg.1    
+IL_004f: /* 28  | 0600000B */ call       ES5.Script.EcmaScript.Objects.Undefined get_Instance()/ES5.Script.EcmaScript.Objects.Undefined
+IL_0054: /* 3b  | 0000000B */ beq        IL_0064
+IL_0059: /* 03  |          */ ldarg.1    
+IL_005a: /* 39  | 00000005 */ brfalse    IL_0064
+IL_005f: /* 38  | 0000000C */ br         IL_0070
+IL_0064: /* 06  |          */ ldloc.0    
+IL_0065: /* 28  | 0600000C */ call       ES5.Script.EcmaScript.Objects.GlobalObject get_Global()/ES5.Script.EcmaScript.ExecutionContext
+IL_006a: /* fe0b| 0001     */ starg      V_1
+IL_006e: /* 00  |          */ nop        
+IL_006f: /* 00  |          */ nop        
+IL_0070: /* 06  |          */ ldloc.0    
+IL_0071: /* 28  | 0600000D */ call       ES5.Script.EcmaScript.Objects.GlobalObject get_Global()/ES5.Script.EcmaScript.ExecutionContext
+IL_0076: /* 28  | 0600000E */ call       Void IncreaseFrame()/ES5.Script.EcmaScript.Objects.GlobalObject
+IL_007b: /* 28  | 0600000F */ call       ES5.Script.EcmaScript.Objects.Undefined get_Instance()/ES5.Script.EcmaScript.Objects.Undefined
+IL_0080: /* 0b  |          */ stloc.1    
+IL_0081: /* 06  |          */ ldloc.0    
+IL_0082: /* 28  | 06000010 */ call       ES5.Script.EcmaScript.EnvironmentRecord get_VariableScope()/ES5.Script.EcmaScript.ExecutionContext
+IL_0087: /* 72  | 70000011 */ ldstr      "ok"
+IL_008c: /* 16  |          */ ldc.i4.0   
+IL_008d: /* 28  | 06000012 */ call       Void CreateMutableBindingNoFail(System.String, Boolean)/ES5.Script.EcmaScript.EnvironmentRecord
+IL_0092: /* 06  |          */ ldloc.0    
+IL_0093: /* 28  | 06000013 */ call       ES5.Script.EcmaScript.EnvironmentRecord get_VariableScope()/ES5.Script.EcmaScript.ExecutionContext
+IL_0098: /* 72  | 70000014 */ ldstr      "o"
+IL_009d: /* 16  |          */ ldc.i4.0   
+IL_009e: /* 28  | 06000015 */ call       Void CreateMutableBindingNoFail(System.String, Boolean)/ES5.Script.EcmaScript.EnvironmentRecord
+IL_00a3: /* 06  |          */ ldloc.0    
+IL_00a4: /* 28  | 06000016 */ call       ES5.Script.EcmaScript.EnvironmentRecord get_VariableScope()/ES5.Script.EcmaScript.ExecutionContext
+IL_00a9: /* 72  | 70000017 */ ldstr      "d"
+IL_00ae: /* 16  |          */ ldc.i4.0   
+IL_00af: /* 28  | 06000018 */ call       Void CreateMutableBindingNoFail(System.String, Boolean)/ES5.Script.EcmaScript.EnvironmentRecord
+IL_00b4: /* 06  |          */ ldloc.0    
+IL_00b5: /* 28  | 06000019 */ call       ES5.Script.EcmaScript.EnvironmentRecord get_LexicalScope()/ES5.Script.EcmaScript.ExecutionContext
+IL_00ba: /* 72  | 7000001A */ ldstr      "ok"
+IL_00bf: /* 16  |          */ ldc.i4.0   
+IL_00c0: /* 28  | 0600001B */ call       ES5.Script.EcmaScript.Reference GetIdentifier(ES5.Script.EcmaScript.EnvironmentRecord, System.String, Boolean)/ES5.Script.EcmaScript.EnvironmentRecord
+IL_00c5: /* 16  |          */ ldc.i4.0   
+IL_00c6: /* 8c  | 0200001C */ box        System.Boolean
+IL_00cb: /* 06  |          */ ldloc.0    
+IL_00cc: /* 28  | 0600001D */ call       System.Object SetValue(System.Object, System.Object, ES5.Script.EcmaScript.ExecutionContext)/ES5.Script.EcmaScript.Reference
+IL_00d1: /* 26  |          */ pop        
+IL_00d2: /* 06  |          */ ldloc.0    
+IL_00d3: /* 28  | 0600001E */ call       ES5.Script.EcmaScript.EnvironmentRecord get_LexicalScope()/ES5.Script.EcmaScript.ExecutionContext
+IL_00d8: /* 72  | 7000001F */ ldstr      "o"
+IL_00dd: /* 16  |          */ ldc.i4.0   
+IL_00de: /* 28  | 06000020 */ call       ES5.Script.EcmaScript.Reference GetIdentifier(ES5.Script.EcmaScript.EnvironmentRecord, System.String, Boolean)/ES5.Script.EcmaScript.EnvironmentRecord
+IL_00e3: /* 06  |          */ ldloc.0    
+IL_00e4: /* 28  | 06000021 */ call       ES5.Script.EcmaScript.EnvironmentRecord get_LexicalScope()/ES5.Script.EcmaScript.ExecutionContext
+IL_00e9: /* 72  | 70000022 */ ldstr      "JSON"
+IL_00ee: /* 16  |          */ ldc.i4.0   
+IL_00ef: /* 28  | 06000023 */ call       ES5.Script.EcmaScript.Reference GetIdentifier(ES5.Script.EcmaScript.EnvironmentRecord, System.String, Boolean)/ES5.Script.EcmaScript.EnvironmentRecord
+IL_00f4: /* 06  |          */ ldloc.0    
+IL_00f5: /* 28  | 06000024 */ call       System.Object GetValue(System.Object, ES5.Script.EcmaScript.ExecutionContext)/ES5.Script.EcmaScript.Reference
+IL_00fa: /* 72  | 70000025 */ ldstr      "stringify"
+IL_00ff: /* 06  |          */ ldloc.0    
+IL_0100: /* 20  | 00000000 */ ldc.i4     0
+IL_0105: /* 28  | 06000026 */ call       ES5.Script.EcmaScript.Reference CreateReference(System.Object, System.Object, ES5.Script.EcmaScript.ExecutionContext, Int32)/ES5.Script.EcmaScript.Reference
+IL_010a: /* 06  |          */ ldloc.0    
+IL_010b: /* 28  | 06000027 */ call       System.Object GetValue(System.Object, ES5.Script.EcmaScript.ExecutionContext)/ES5.Script.EcmaScript.Reference
+IL_0110: /* 06  |          */ ldloc.0    
+IL_0111: /* 28  | 06000028 */ call       System.Object SetValue(System.Object, System.Object, ES5.Script.EcmaScript.ExecutionContext)/ES5.Script.EcmaScript.Reference
+IL_0116: /* 26  |          */ pop        
+IL_0117: /* 06  |          */ ldloc.0    
+IL_0118: /* 28  | 06000029 */ call       ES5.Script.EcmaScript.EnvironmentRecord get_LexicalScope()/ES5.Script.EcmaScript.ExecutionContext
+IL_011d: /* 72  | 7000002A */ ldstr      "d"
+IL_0122: /* 16  |          */ ldc.i4.0   
+IL_0123: /* 28  | 0600002B */ call       ES5.Script.EcmaScript.Reference GetIdentifier(ES5.Script.EcmaScript.EnvironmentRecord, System.String, Boolean)/ES5.Script.EcmaScript.EnvironmentRecord
+IL_0128: /* 06  |          */ ldloc.0    
+IL_0129: /* 28  | 0600002C */ call       ES5.Script.EcmaScript.EnvironmentRecord get_LexicalScope()/ES5.Script.EcmaScript.ExecutionContext
+IL_012e: /* 72  | 7000002D */ ldstr      "JSON"
+IL_0133: /* 16  |          */ ldc.i4.0   
+IL_0134: /* 28  | 0600002E */ call       ES5.Script.EcmaScript.Reference GetIdentifier(ES5.Script.EcmaScript.EnvironmentRecord, System.String, Boolean)/ES5.Script.EcmaScript.EnvironmentRecord
+IL_0139: /* 06  |          */ ldloc.0    
+IL_013a: /* 28  | 0600002F */ call       System.Object GetValue(System.Object, ES5.Script.EcmaScript.ExecutionContext)/ES5.Script.EcmaScript.Reference
+IL_013f: /* 72  | 70000030 */ ldstr      "stringify"
+IL_0144: /* 06  |          */ ldloc.0    
+IL_0145: /* 20  | 00000000 */ ldc.i4     0
+IL_014a: /* 28  | 06000031 */ call       ES5.Script.EcmaScript.Reference CreateReference(System.Object, System.Object, ES5.Script.EcmaScript.ExecutionContext, Int32)/ES5.Script.EcmaScript.Reference
+IL_014f: /* 06  |          */ ldloc.0    
+IL_0150: /* 28  | 06000032 */ call       Boolean Delete(System.Object, ES5.Script.EcmaScript.ExecutionContext)/ES5.Script.EcmaScript.Reference
+IL_0155: /* 8c  | 02000033 */ box        System.Boolean
+IL_015a: /* 06  |          */ ldloc.0    
+IL_015b: /* 28  | 06000034 */ call       System.Object SetValue(System.Object, System.Object, ES5.Script.EcmaScript.ExecutionContext)/ES5.Script.EcmaScript.Reference
+IL_0160: /* 26  |          */ pop        
+IL_0161: /* 06  |          */ ldloc.0    
+IL_0162: /* 28  | 06000035 */ call       ES5.Script.EcmaScript.EnvironmentRecord get_LexicalScope()/ES5.Script.EcmaScript.ExecutionContext
+IL_0167: /* 72  | 70000036 */ ldstr      "d"
+IL_016c: /* 16  |          */ ldc.i4.0   
+IL_016d: /* 28  | 06000037 */ call       ES5.Script.EcmaScript.Reference GetIdentifier(ES5.Script.EcmaScript.EnvironmentRecord, System.String, Boolean)/ES5.Script.EcmaScript.EnvironmentRecord
+IL_0172: /* 06  |          */ ldloc.0    
+IL_0173: /* 28  | 06000038 */ call       System.Object GetValue(System.Object, ES5.Script.EcmaScript.ExecutionContext)/ES5.Script.EcmaScript.Reference
+IL_0178: /* 17  |          */ ldc.i4.1   
+IL_0179: /* 8c  | 02000039 */ box        System.Boolean
+IL_017e: /* 06  |          */ ldloc.0    
+IL_017f: /* 28  | 0600003A */ call       System.Object StrictEqual(System.Object, System.Object, ES5.Script.EcmaScript.ExecutionContext)/ES5.Script.EcmaScript.Bindings.Operators
+IL_0184: /* 25  |          */ dup        
+IL_0185: /* 06  |          */ ldloc.0    
+IL_0186: /* 28  | 0600003B */ call       Boolean GetObjAsBoolean(System.Object, ES5.Script.EcmaScript.ExecutionContext)/ES5.Script.EcmaScript.Objects.Utilities
+IL_018b: /* 39  | 0000004B */ brfalse    IL_01db
+IL_0190: /* 26  |          */ pop        
+IL_0191: /* 06  |          */ ldloc.0    
+IL_0192: /* 28  | 0600003C */ call       ES5.Script.EcmaScript.EnvironmentRecord get_LexicalScope()/ES5.Script.EcmaScript.ExecutionContext
+IL_0197: /* 72  | 7000003D */ ldstr      "JSON"
+IL_019c: /* 16  |          */ ldc.i4.0   
+IL_019d: /* 28  | 0600003E */ call       ES5.Script.EcmaScript.Reference GetIdentifier(ES5.Script.EcmaScript.EnvironmentRecord, System.String, Boolean)/ES5.Script.EcmaScript.EnvironmentRecord
+IL_01a2: /* 06  |          */ ldloc.0    
+IL_01a3: /* 28  | 0600003F */ call       System.Object GetValue(System.Object, ES5.Script.EcmaScript.ExecutionContext)/ES5.Script.EcmaScript.Reference
+IL_01a8: /* 72  | 70000040 */ ldstr      "stringify"
+IL_01ad: /* 06  |          */ ldloc.0    
+IL_01ae: /* 20  | 00000000 */ ldc.i4     0
+IL_01b3: /* 28  | 06000041 */ call       ES5.Script.EcmaScript.Reference CreateReference(System.Object, System.Object, ES5.Script.EcmaScript.ExecutionContext, Int32)/ES5.Script.EcmaScript.Reference
+IL_01b8: /* 06  |          */ ldloc.0    
+IL_01b9: /* 28  | 06000042 */ call       System.Object GetValue(System.Object, ES5.Script.EcmaScript.ExecutionContext)/ES5.Script.EcmaScript.Reference
+IL_01be: /* 06  |          */ ldloc.0    
+IL_01bf: /* 28  | 06000043 */ call       ES5.Script.EcmaScript.EnvironmentRecord get_LexicalScope()/ES5.Script.EcmaScript.ExecutionContext
+IL_01c4: /* 72  | 70000044 */ ldstr      "undefined"
+IL_01c9: /* 16  |          */ ldc.i4.0   
+IL_01ca: /* 28  | 06000045 */ call       ES5.Script.EcmaScript.Reference GetIdentifier(ES5.Script.EcmaScript.EnvironmentRecord, System.String, Boolean)/ES5.Script.EcmaScript.EnvironmentRecord
+IL_01cf: /* 06  |          */ ldloc.0    
+IL_01d0: /* 28  | 06000046 */ call       System.Object GetValue(System.Object, ES5.Script.EcmaScript.ExecutionContext)/ES5.Script.EcmaScript.Reference
+IL_01d5: /* 06  |          */ ldloc.0    
+IL_01d6: /* 28  | 06000047 */ call       System.Object StrictEqual(System.Object, System.Object, ES5.Script.EcmaScript.ExecutionContext)/ES5.Script.EcmaScript.Bindings.Operators
+IL_01db: /* 06  |          */ ldloc.0    
+IL_01dc: /* 28  | 06000048 */ call       Boolean GetObjAsBoolean(System.Object, ES5.Script.EcmaScript.ExecutionContext)/ES5.Script.EcmaScript.Objects.Utilities
+IL_01e1: /* 39  | 0000001E */ brfalse    IL_0204
+IL_01e6: /* 06  |          */ ldloc.0    
+IL_01e7: /* 28  | 06000049 */ call       ES5.Script.EcmaScript.EnvironmentRecord get_LexicalScope()/ES5.Script.EcmaScript.ExecutionContext
+IL_01ec: /* 72  | 7000004A */ ldstr      "ok"
+IL_01f1: /* 16  |          */ ldc.i4.0   
+IL_01f2: /* 28  | 0600004B */ call       ES5.Script.EcmaScript.Reference GetIdentifier(ES5.Script.EcmaScript.EnvironmentRecord, System.String, Boolean)/ES5.Script.EcmaScript.EnvironmentRecord
+IL_01f7: /* 17  |          */ ldc.i4.1   
+IL_01f8: /* 8c  | 0200004C */ box        System.Boolean
+IL_01fd: /* 06  |          */ ldloc.0    
+IL_01fe: /* 28  | 0600004D */ call       System.Object SetValue(System.Object, System.Object, ES5.Script.EcmaScript.ExecutionContext)/ES5.Script.EcmaScript.Reference
+IL_0203: /* 26  |          */ pop        
+IL_0204: /* 15  |          */ ldc.i4.m1  
+IL_0205: /* 0c  |          */ stloc.2    
+IL_0206: /* 06  |          */ ldloc.0    
+IL_0207: /* 28  | 0600004E */ call       ES5.Script.EcmaScript.EnvironmentRecord get_LexicalScope()/ES5.Script.EcmaScript.ExecutionContext
+IL_020c: /* 72  | 7000004F */ ldstr      "JSON"
+IL_0211: /* 16  |          */ ldc.i4.0   
+IL_0212: /* 28  | 06000050 */ call       ES5.Script.EcmaScript.Reference GetIdentifier(ES5.Script.EcmaScript.EnvironmentRecord, System.String, Boolean)/ES5.Script.EcmaScript.EnvironmentRecord
+IL_0217: /* 06  |          */ ldloc.0    
+IL_0218: /* 28  | 06000051 */ call       System.Object GetValue(System.Object, ES5.Script.EcmaScript.ExecutionContext)/ES5.Script.EcmaScript.Reference
+IL_021d: /* 72  | 70000052 */ ldstr      "stringify"
+IL_0222: /* 06  |          */ ldloc.0    
+IL_0223: /* 20  | 00000000 */ ldc.i4     0
+IL_0228: /* 28  | 06000053 */ call       ES5.Script.EcmaScript.Reference CreateReference(System.Object, System.Object, ES5.Script.EcmaScript.ExecutionContext, Int32)/ES5.Script.EcmaScript.Reference
+IL_022d: /* 06  |          */ ldloc.0    
+IL_022e: /* 28  | 06000054 */ call       ES5.Script.EcmaScript.EnvironmentRecord get_LexicalScope()/ES5.Script.EcmaScript.ExecutionContext
+IL_0233: /* 72  | 70000055 */ ldstr      "o"
+IL_0238: /* 16  |          */ ldc.i4.0   
+IL_0239: /* 28  | 06000056 */ call       ES5.Script.EcmaScript.Reference GetIdentifier(ES5.Script.EcmaScript.EnvironmentRecord, System.String, Boolean)/ES5.Script.EcmaScript.EnvironmentRecord
+IL_023e: /* 06  |          */ ldloc.0    
+IL_023f: /* 28  | 06000057 */ call       System.Object GetValue(System.Object, ES5.Script.EcmaScript.ExecutionContext)/ES5.Script.EcmaScript.Reference
+IL_0244: /* 06  |          */ ldloc.0    
+IL_0245: /* 28  | 06000058 */ call       System.Object SetValue(System.Object, System.Object, ES5.Script.EcmaScript.ExecutionContext)/ES5.Script.EcmaScript.Reference
+IL_024a: /* 26  |          */ pop        
+IL_024b: /* 08  |          */ ldloc.2    
+IL_024c: /* 45  | ...      */ switch     )
+IL_0251: /* dd  | 0000004D */ leave      IL_02a3
+IL_0256: /* 26  |          */ pop        
+IL_0257: /* 06  |          */ ldloc.0    
+IL_0258: /* 28  | 0600005A */ call       ES5.Script.EcmaScript.EnvironmentRecord get_LexicalScope()/ES5.Script.EcmaScript.ExecutionContext
+IL_025d: /* 72  | 7000005B */ ldstr      "JSON"
+IL_0262: /* 16  |          */ ldc.i4.0   
+IL_0263: /* 28  | 0600005C */ call       ES5.Script.EcmaScript.Reference GetIdentifier(ES5.Script.EcmaScript.EnvironmentRecord, System.String, Boolean)/ES5.Script.EcmaScript.EnvironmentRecord
+IL_0268: /* 06  |          */ ldloc.0    
+IL_0269: /* 28  | 0600005D */ call       System.Object GetValue(System.Object, ES5.Script.EcmaScript.ExecutionContext)/ES5.Script.EcmaScript.Reference
+IL_026e: /* 72  | 7000005E */ ldstr      "stringify"
+IL_0273: /* 06  |          */ ldloc.0    
+IL_0274: /* 20  | 00000000 */ ldc.i4     0
+IL_0279: /* 28  | 0600005F */ call       ES5.Script.EcmaScript.Reference CreateReference(System.Object, System.Object, ES5.Script.EcmaScript.ExecutionContext, Int32)/ES5.Script.EcmaScript.Reference
+IL_027e: /* 06  |          */ ldloc.0    
+IL_027f: /* 28  | 06000060 */ call       ES5.Script.EcmaScript.EnvironmentRecord get_LexicalScope()/ES5.Script.EcmaScript.ExecutionContext
+IL_0284: /* 72  | 70000061 */ ldstr      "o"
+IL_0289: /* 16  |          */ ldc.i4.0   
+IL_028a: /* 28  | 06000062 */ call       ES5.Script.EcmaScript.Reference GetIdentifier(ES5.Script.EcmaScript.EnvironmentRecord, System.String, Boolean)/ES5.Script.EcmaScript.EnvironmentRecord
+IL_028f: /* 06  |          */ ldloc.0    
+IL_0290: /* 28  | 06000063 */ call       System.Object GetValue(System.Object, ES5.Script.EcmaScript.ExecutionContext)/ES5.Script.EcmaScript.Reference
+IL_0295: /* 06  |          */ ldloc.0    
+IL_0296: /* 28  | 06000064 */ call       System.Object SetValue(System.Object, System.Object, ES5.Script.EcmaScript.ExecutionContext)/ES5.Script.EcmaScript.Reference
+IL_029b: /* 26  |          */ pop        
+IL_029c: /* fe1a|          */ rethrow    
+IL_029e: /* dd  | 00000000 */ leave      IL_02a3
+IL_02a3: /* 06  |          */ ldloc.0    
+IL_02a4: /* 28  | 06000065 */ call       ES5.Script.EcmaScript.EnvironmentRecord get_LexicalScope()/ES5.Script.EcmaScript.ExecutionContext
+IL_02a9: /* 72  | 70000066 */ ldstr      "ok"
+IL_02ae: /* 16  |          */ ldc.i4.0   
+IL_02af: /* 28  | 06000067 */ call       ES5.Script.EcmaScript.Reference GetIdentifier(ES5.Script.EcmaScript.EnvironmentRecord, System.String, Boolean)/ES5.Script.EcmaScript.EnvironmentRecord
+IL_02b4: /* 06  |          */ ldloc.0    
+IL_02b5: /* 28  | 06000068 */ call       System.Object GetValue(System.Object, ES5.Script.EcmaScript.ExecutionContext)/ES5.Script.EcmaScript.Reference
+IL_02ba: /* 0b  |          */ stloc.1    
+IL_02bb: /* dd  | 00000011 */ leave      IL_02d1
+IL_02c0: /* dd  | 0000000C */ leave      IL_02d1
+IL_02c5: /* 06  |          */ ldloc.0    
+IL_02c6: /* 28  | 06000069 */ call       ES5.Script.EcmaScript.Objects.GlobalObject get_Global()/ES5.Script.EcmaScript.ExecutionContext
+IL_02cb: /* 28  | 0600006A */ call       Void DecreaseFrame()/ES5.Script.EcmaScript.Objects.GlobalObject
+IL_02d0: /* dc  |          */ endfinally 
+IL_02d1: /* 07  |          */ ldloc.1    
+IL_02d2: /* 2a  |          */ ret        

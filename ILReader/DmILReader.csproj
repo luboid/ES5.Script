@@ -79,6 +79,10 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetPath)" "C:\Users\lyubomir.lyubenov\Documents\Visual Studio 2017\Visualizers" /y</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>del /s/q $(ProjectDir)obj\*.*</PreBuildEvent>
   </PropertyGroup>
 </Project>

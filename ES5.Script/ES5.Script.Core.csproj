@@ -25,4 +25,8 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="rem del /s/q $(ProjectDir)obj\*.*" />
+  </Target>
+
 </Project>

@@ -1,0 +1,55 @@
+DynamicMethod
+System.Object test(ES5.Script.EcmaScript.ExecutionContext, System.Object, System.Object[])
+Try fix labels: succeed
+
+IL_0000: /* 02  |          */ ldarg.0    
+IL_0001: /* 0a  |          */ stloc.0    
+IL_0002: /* 06  |          */ ldloc.0    
+IL_0003: /* 20  | 00000000 */ ldc.i4     0
+IL_0008: /* 28  | 06000002 */ call       Void set_Strict(Boolean)/ES5.Script.EcmaScript.ExecutionContext
+IL_000d: /* 06  |          */ ldloc.0    
+IL_000e: /* 28  | 06000003 */ call       ES5.Script.EcmaScript.Objects.GlobalObject get_Global()/ES5.Script.EcmaScript.ExecutionContext
+IL_0013: /* 28  | 06000004 */ call       Void IncreaseFrame()/ES5.Script.EcmaScript.Objects.GlobalObject
+IL_0018: /* 28  | 06000005 */ call       ES5.Script.EcmaScript.Objects.Undefined get_Instance()/ES5.Script.EcmaScript.Objects.Undefined
+IL_001d: /* 0b  |          */ stloc.1    
+IL_001e: /* 03  |          */ ldarg.1    
+IL_001f: /* 39  | 00000010 */ brfalse    IL_0034
+IL_0024: /* 03  |          */ ldarg.1    
+IL_0025: /* 28  | 06000006 */ call       ES5.Script.EcmaScript.Objects.Undefined get_Instance()/ES5.Script.EcmaScript.Objects.Undefined
+IL_002a: /* 3b  | 00000005 */ beq        IL_0034
+IL_002f: /* 38  | 0000000C */ br         IL_0040
+IL_0034: /* 06  |          */ ldloc.0    
+IL_0035: /* 28  | 06000007 */ call       ES5.Script.EcmaScript.Objects.GlobalObject get_Global()/ES5.Script.EcmaScript.ExecutionContext
+IL_003a: /* fe0b| 0001     */ starg      V_1
+IL_003e: /* 00  |          */ nop        
+IL_003f: /* 00  |          */ nop        
+IL_0040: /* 06  |          */ ldloc.0    
+IL_0041: /* 28  | 06000008 */ call       ES5.Script.EcmaScript.EnvironmentRecord get_VariableScope()/ES5.Script.EcmaScript.ExecutionContext
+IL_0046: /* 72  | 70000009 */ ldstr      "test"
+IL_004b: /* 16  |          */ ldc.i4.0   
+IL_004c: /* 28  | 0600000A */ call       Void CreateMutableBindingNoFail(System.String, Boolean)/ES5.Script.EcmaScript.EnvironmentRecord
+IL_0051: /* 06  |          */ ldloc.0    
+IL_0052: /* 28  | 0600000B */ call       ES5.Script.EcmaScript.EnvironmentRecord get_VariableScope()/ES5.Script.EcmaScript.ExecutionContext
+IL_0057: /* 72  | 7000000C */ ldstr      "test"
+IL_005c: /* 06  |          */ ldloc.0    
+IL_005d: /* 28  | 0600000D */ call       ES5.Script.EcmaScript.Objects.GlobalObject get_Global()/ES5.Script.EcmaScript.ExecutionContext
+IL_0062: /* 06  |          */ ldloc.0    
+IL_0063: /* 28  | 0600000E */ call       ES5.Script.EcmaScript.EnvironmentRecord get_VariableScope()/ES5.Script.EcmaScript.ExecutionContext
+IL_0068: /* 72  | 7000000F */ ldstr      "test"
+IL_006d: /* 06  |          */ ldloc.0    
+IL_006e: /* 28  | 06000010 */ call       ES5.Script.EcmaScript.Objects.GlobalObject get_Global()/ES5.Script.EcmaScript.ExecutionContext
+IL_0073: /* 20  | 00000000 */ ldc.i4     0
+IL_0078: /* 28  | 06000011 */ call       ES5.Script.EcmaScript.InternalFunctionDelegate GetFunction(Int32)/ES5.Script.EcmaScript.Objects.GlobalObject
+IL_007d: /* 20  | 00000000 */ ldc.i4     0
+IL_0082: /* 72  | 70000012 */ ldstr      "function test() {\r\n  var ok = false;\r\n  try {\r\n      var o = JSON.stringify;\r\n      var d = delete JSON.stringify;\r\n      if (d === true && JSON.stringify === undefined) {\r\n        ok = true;\r\n      }\r\n  } finally {\r\n    JSON.stringify = o;\r\n  }\r\n  return ok;\r\n}"
+IL_0087: /* 20  | 00000000 */ ldc.i4     0
+IL_008c: /* 73  | 06000013 */ newobj     Void .ctor(ES5.Script.EcmaScript.Objects.GlobalObject, ES5.Script.EcmaScript.EnvironmentRecord, System.String, ES5.Script.EcmaScript.InternalFunctionDelegate, Int32, System.String, Boolean)/ES5.Script.EcmaScript.Objects.EcmaScriptInternalFunctionObject
+IL_0091: /* 16  |          */ ldc.i4.0   
+IL_0092: /* 6f  | 06000014 */ callvirt   Void SetMutableBinding(System.String, System.Object, Boolean)/ES5.Script.EcmaScript.EnvironmentRecord
+IL_0097: /* dd  | 0000000C */ leave      IL_00a8
+IL_009c: /* 06  |          */ ldloc.0    
+IL_009d: /* 28  | 06000015 */ call       ES5.Script.EcmaScript.Objects.GlobalObject get_Global()/ES5.Script.EcmaScript.ExecutionContext
+IL_00a2: /* 28  | 06000016 */ call       Void DecreaseFrame()/ES5.Script.EcmaScript.Objects.GlobalObject
+IL_00a7: /* dc  |          */ endfinally 
+IL_00a8: /* 07  |          */ ldloc.1    
+IL_00a9: /* 2a  |          */ ret        

@@ -30,6 +30,9 @@ namespace ES5.Script.EcmaScript
         List<Statement> fStatementStack;
         Label? fBreak;
         Label? fContinue;
+#if DEBUG
+        static int fCounter;
+#endif
 
         public GlobalObject GlobalObject
         {
@@ -379,6 +382,9 @@ namespace ES5.Script.EcmaScript
 
 #if DEBUG
                 var data = ClrTest.Reflection.ObjectSource.GetData(lMethod);
+
+                ++fCounter;
+                System.IO.File.WriteAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "code-listing_" + fCounter + ".txt"), data);
 #endif
 
                 if (aFunction != null)
@@ -1362,7 +1368,7 @@ namespace ES5.Script.EcmaScript
                         break;
                     case ElementType.RegExExpression:
                         {
-                            
+
                             fILG.Emit(OpCodes.Ldloc, fExecutionContext);
                             fILG.Emit(OpCodes.Call, ExecutionContext.Method_get_Global);
                             fILG.Emit(OpCodes.Ldstr, ((RegExExpression)lExpression).String);
@@ -2480,12 +2486,12 @@ namespace ES5.Script.EcmaScript
                             fILG.Emit(OpCodes.Ldloc, fExecutionContext);
                             fILG.Emit(OpCodes.Call, ExecutionContext.Method_get_Global);
                             fILG.Emit(OpCodes.Newobj, EcmaScriptArrayObject.ConstructorInfo);
-                            for (int i = 0, l = items.Count-1; i <= l; i++)
+                            for (int i = 0, l = items.Count - 1; i <= l; i++)
                             {
                                 var el = items[i];
                                 // TODO: Fix parser to exclude last empty element in array
                                 // chapter11\11.1\11.1.4\11.1.4-0.js
-                                if (null==el && i == l)
+                                if (null == el && i == l)
                                 {
                                     continue;
                                 }
