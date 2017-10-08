@@ -31,7 +31,7 @@ namespace ES5.Script.EcmaScript
         Label? fBreak;
         Label? fContinue;
 #if DEBUG
-        static int fCounter;
+        //static int fCounter;
 #endif
 
         public GlobalObject GlobalObject
@@ -217,7 +217,8 @@ namespace ES5.Script.EcmaScript
                     }
 
                     fILG.Emit(OpCodes.Ldarg, 3);
-                    //eecution context, object[], function
+
+                    //ecution context, object[], function
                     fILG.Emit(OpCodes.Ldc_I4, fUseStrict ? 1 : 0);
                     fILG.Emit(OpCodes.Newobj, EcmaScriptArgumentObject.ConstructorInfo);
 
@@ -350,26 +351,22 @@ namespace ES5.Script.EcmaScript
 
                 fILG.EndExceptionBlock();
 
-                if (fDebug)
-                {
-                    if (!aEval && (aFunction == null))
-                    {
-                        fILG.BeginCatchBlock(typeof(Exception));
-                        var lTemp = AllocateLocal(typeof(Exception));
-                        fILG.Emit(OpCodes.Stloc, lTemp);
-                        WriteDebugStack();
-                        fILG.Emit(OpCodes.Ldloc, lTemp);
-                        fILG.Emit(OpCodes.Callvirt, DebugSink.Method_UncaughtException);
-                        fILG.Emit(OpCodes.Rethrow);
-                        ReleaseLocal(lTemp);
-                        fILG.EndExceptionBlock();
-                    }
+                if (fDebug && !aEval && (aFunction == null))
+                {//except
+                    fILG.BeginCatchBlock(typeof(Exception));
+                    var lTemp = AllocateLocal(typeof(Exception));
+                    fILG.Emit(OpCodes.Stloc, lTemp);
+                    WriteDebugStack();
+                    fILG.Emit(OpCodes.Ldloc, lTemp);
+                    fILG.Emit(OpCodes.Callvirt, DebugSink.Method_UncaughtException);
+                    fILG.Emit(OpCodes.Rethrow);
+                    ReleaseLocal(lTemp);
+                    fILG.EndExceptionBlock();
                 }
 
                 fILG.MarkLabel(fExitLabel);
                 fILG.Emit(OpCodes.Ldloc, fResultVar);
                 fILG.Emit(OpCodes.Ret);
-
 
                 fExcept = lOldExcept;
                 fExitLabel = lOldExitLabel;
@@ -381,10 +378,10 @@ namespace ES5.Script.EcmaScript
                 fContinue = lOldContinue;
 
 #if DEBUG
-                var data = ClrTest.Reflection.ObjectSource.GetData(lMethod);
+                //var data = ClrTest.Reflection.ObjectSource.GetData(lMethod);
 
-                ++fCounter;
-                System.IO.File.WriteAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "code-listing_" + fCounter + ".txt"), data);
+                //++fCounter;
+                //System.IO.File.WriteAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "code-listing_" + fCounter + ".txt"), data);
 #endif
 
                 if (aFunction != null)
@@ -432,16 +429,24 @@ namespace ES5.Script.EcmaScript
 
                 case ElementType.ReturnStatement:
                     {
-                        if (!fDisableResult) throw new ScriptParsingException(El.PositionPair.File, El.PositionPair, EcmaScriptErrorKind.CannotReturnHere);
+                        if (!fDisableResult)
+                        {
+                            throw new ScriptParsingException(El.PositionPair.File, El.PositionPair, EcmaScriptErrorKind.CannotReturnHere);
+                        }
+
                         var e = (ReturnStatement)El;
                         if (e.ExpressionElement == null)
+                        {
                             fILG.Emit(OpCodes.Call, Undefined.Method_Instance);
+                        }
                         else
                         {
                             WriteExpression(e.ExpressionElement);
                             CallGetValue(e.ExpressionElement.Type);
                         }
+
                         fILG.Emit(OpCodes.Stloc, fResultVar);
+
                         var lFinallyInfo = Enumerable.Reverse(fStatementStack)
                                               .Where(a => ((a.Type == ElementType.TryStatement) && ((TryStatement)a).FinallyData != null))
                                               .Select(a => ((TryStatement)a).FinallyData).ToArray();
@@ -455,12 +460,18 @@ namespace ES5.Script.EcmaScript
                             }
 
                             if (((TryStatement)Enumerable.Reverse(fStatementStack).FirstOrDefault(a => a.Type == ElementType.TryStatement)).Catch != null)
+                            {
                                 fILG.Emit(OpCodes.Leave, lFinallyInfo[0].FinallyLabel);
+                            }
                             else
+                            {
                                 fILG.Emit(OpCodes.Br, lFinallyInfo[0].FinallyLabel);
+                            }
                         }
                         else
+                        {
                             fILG.Emit(OpCodes.Leave, fExitLabel); // there"s always an outside finally
+                        }
                     }
                     break;
                 case ElementType.ExpressionStatement:
@@ -848,9 +859,15 @@ namespace ES5.Script.EcmaScript
                 fILG.BeginExceptionBlock();
             }
 
-            if (el.Catch != null) fILG.BeginExceptionBlock();
+            if (el.Catch != null)
+            {
+                fILG.BeginExceptionBlock();
+            }
 
-            if (el.Body != null) WriteStatement(el.Body);
+            if (el.Body != null)
+            {
+                WriteStatement(el.Body);
+            }
 
             if (el.Catch != null)
             {
@@ -880,13 +897,27 @@ namespace ES5.Script.EcmaScript
                 var lOldDisableResult = fDisableResult;
                 fDisableResult = true;
                 WriteStatement(el.Finally);
-                fILG.Emit(OpCodes.Ldloc, lData.FinallyState);
-                fILG.Emit(OpCodes.Switch, lData.JumpTable.ToArray());
+
+                for (var i = 0; i < lData.JumpTable.Count; i++)
+                {
+                    fILG.Emit(OpCodes.Ldloc, lData.FinallyState);
+                    fILG.Emit(OpCodes.Ldc_I4, i);
+                    fILG.Emit(OpCodes.Ceq);//stack 0/1
+                    var nextStat = fILG.DefineLabel();
+                    fILG.Emit(OpCodes.Brfalse, nextStat);
+
+                    fILG.Emit(lData.JumpTable[i] == fExitLabel ? OpCodes.Leave : OpCodes.Br, lData.JumpTable[i]);
+
+                    fILG.MarkLabel(nextStat);
+                }
+                //fILG.Emit(OpCodes.Switch, lData.JumpTable.ToArray());
+
                 fILG.BeginCatchBlock(typeof(Exception));
                 fILG.Emit(OpCodes.Pop);
                 WriteStatement(el.Finally);
                 fILG.Emit(OpCodes.Rethrow);
                 fILG.EndExceptionBlock();
+
                 fDisableResult = lOldDisableResult;
             }
         }
@@ -943,15 +974,20 @@ namespace ES5.Script.EcmaScript
             {
                 fILG.Emit(OpCodes.Br, (Label)fBreak);
             }
-            MarkLabelled(fBreak, null);
-            if (!lGotDefault) fILG.Emit(OpCodes.Br, (Label)fBreak);
 
+            MarkLabelled(fBreak, null);
+            if (!lGotDefault)
+            {
+                fILG.Emit(OpCodes.Br, (Label)fBreak);
+            }
 
             for (int i = 0, l = el.Clauses.Count; i < l; i++)
             {
                 fILG.MarkLabel(lLabels[i]);
                 foreach (var bodyelement in el.Clauses[i].Body)
+                {
                     WriteStatement(bodyelement);
+                }
             }
 
             fILG.MarkLabel((Label)fBreak);
@@ -1020,7 +1056,9 @@ namespace ES5.Script.EcmaScript
             if (el.Identifier == null)
             {
                 if (fBreak == null)
+                {
                     throw new ScriptParsingException(el.PositionPair.File, el.PositionPair, EcmaScriptErrorKind.CannotBreakHere);
+                }
 
                 for (var i = fStatementStack.Count - 1; i >= 0; i--)
                 {
@@ -1034,9 +1072,11 @@ namespace ES5.Script.EcmaScript
                         }
                     }
                     else
-                        if (((IterationStatement)fStatementStack[i])?.Break == fBreak)
                     {
-                        break;
+                        if (((IterationStatement)fStatementStack[i])?.Break == fBreak)
+                        {
+                            break;
+                        }
                     }
                 }
 
@@ -1052,10 +1092,14 @@ namespace ES5.Script.EcmaScript
                         fILG.Emit(OpCodes.Br, lFinallyInfo[0].FinallyLabel);
                     }
                     else
+                    {
                         fILG.Emit(OpCodes.Leave, (Label)fBreak);
+                    }
                 }
                 else
+                {
                     fILG.Emit(OpCodes.Br, (Label)fBreak);
+                }
             }
             else
             {
@@ -1133,13 +1177,20 @@ namespace ES5.Script.EcmaScript
                             fILG.Emit(OpCodes.Ldc_I4, lFinallyInfo[i].AddUnique(i < lFinallyInfo.Count - 1 ? lFinallyInfo[i + 1].FinallyLabel : (Label)fContinue));
                             fILG.Emit(OpCodes.Stloc, lFinallyInfo[i].FinallyState);
                         }
+
                         if (((TryStatement)Enumerable.Reverse(fStatementStack).FirstOrDefault(a => a.Type == ElementType.TryStatement)).Catch != null)
+                        {
                             fILG.Emit(OpCodes.Leave, lFinallyInfo[0].FinallyLabel);
+                        }
                         else
+                        {
                             fILG.Emit(OpCodes.Br, lFinallyInfo[0].FinallyLabel);
+                        }
                     }
                     else
+                    {
                         fILG.Emit(OpCodes.Leave, (Label)fContinue);
+                    }
                 }
                 else
                     fILG.Emit(OpCodes.Br, (Label)fContinue);
@@ -1169,6 +1220,7 @@ namespace ES5.Script.EcmaScript
                                     fILG.Emit(OpCodes.Ldc_I4, lFinallyInfo[j].AddUnique(j < lFinallyInfo.Count - 1 ? lFinallyInfo[j + 1].FinallyLabel : (Label)lIt.Continue));
                                     fILG.Emit(OpCodes.Stloc, lFinallyInfo[j].FinallyState);
                                 }
+
                                 if (((TryStatement)Enumerable.Reverse(fStatementStack).FirstOrDefault(a => a.Type == ElementType.TryStatement)).Catch != null)
                                     fILG.Emit(OpCodes.Leave, lFinallyInfo[0].FinallyLabel);
                                 else
@@ -1180,9 +1232,13 @@ namespace ES5.Script.EcmaScript
                         else
                         {
                             if (lIt.Continue == null)
+                            {
                                 fILG.Emit(OpCodes.Leave, fExitLabel);
+                            }
                             else
+                            {
                                 fILG.Emit(OpCodes.Leave, (Label)lIt.Continue);
+                            }
                         }
                         return;
                     }
