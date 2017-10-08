@@ -72,18 +72,8 @@ namespace es5Conform
 
         static void Main(string[] args)
         {
-            //if (null == args || 0 == args.Length)
-            //{
-            //    Console.WriteLine("You need to provide test cases path and test results path.");
-            //}
-
-            DateTime d0; /*var okTests = new[] 
-            {
-                @"chapter15\15.4\15.4.4\15.4.4.17\15.4.4.17-8-10.js",
-                @"chapter15\15.4\15.4.4\15.4.4.16\15.4.4.16-8-10.js",
-                @"chapter15\15.4\15.4.4\15.4.4.14\15.4.4.14-9.a-1.js"
-            };*/
-            var testResult = false;
+            DateTime d0;
+            var testResult = true;
             string result; var c = 0; var o = 0; var f = 0; var settings = new XmlWriterSettings { NewLineOnAttributes = true, Indent = true };
             using (var fail = XmlWriter.Create(Path.GetFullPath("fail.xml"), settings))
             using (var success = XmlWriter.Create(Path.GetFullPath("success.xml"), settings))
@@ -92,9 +82,6 @@ namespace es5Conform
                 success.WriteStartElement("tests");
                 try
                 {
-                    /*foreach (var test in new[] {
-                        @"chapter15\15.2\15.2.3\15.2.3.4\15.2.3.4-4-23.js"
-                    })*/
                     foreach (var test in EnumerateTests(fTestRoot))
                     {
                         ++c;
@@ -104,7 +91,7 @@ namespace es5Conform
                         {
                             result = RunTest(test);
                             Console.WriteLine(":{1}:{2}", test, DateTime.Now.Subtract(d0), result ?? "OK");
-                            if (result == null /*|| Array.IndexOf<string>(okTests, test) > -1*/)
+                            if (result == null)
                             {
                                 ++o;
                                 success.WriteResult(test, null, DateTime.Now.Subtract(d0), testResult);
