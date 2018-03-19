@@ -195,7 +195,7 @@ namespace ES5.Script.EcmaScript
 
                     // public delegate(aScope: ExecutionContext; aSelf: Object; params args: array of Object; aFunc: EcmaScriptInternalFunctionObject): Object;
                     // no need to check if it exists it is always local to the function scope
-                    // it can be call with different number of parameters 
+                    // it can be call with different number of parameters
 
                     //fILG.Emit(OpCodes.Ldloc, fExecutionContext);
                     //fILG.Emit(OpCodes.Call, ExecutionContext.Method_get_VariableScope);
@@ -1035,6 +1035,18 @@ namespace ES5.Script.EcmaScript
                             fILG.Emit(OpCodes.Ldc_I4_0);
                         fILG.Emit(OpCodes.Call, EnvironmentRecord.Method_CreateMutableBindingNoFail);
                     }
+                }
+                else if (el.Type == ElementType.VariableDeclaration)
+                {
+                    var en = (VariableDeclaration)el;
+                    fILG.Emit(OpCodes.Ldloc, fExecutionContext);
+                    fILG.Emit(OpCodes.Call, ExecutionContext.Method_get_VariableScope);
+                    fILG.Emit(OpCodes.Ldstr, en.Identifier);
+                    if (aEval)
+                        fILG.Emit(OpCodes.Ldc_I4_1);
+                    else
+                        fILG.Emit(OpCodes.Ldc_I4_0);
+                    fILG.Emit(OpCodes.Call, EnvironmentRecord.Method_CreateMutableBindingNoFail);
                 }
             }
         }
