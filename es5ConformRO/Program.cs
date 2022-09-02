@@ -22,7 +22,7 @@ namespace es5Conform
             var lPath = new Uri(typeof(Program).Assembly.EscapedCodeBase).LocalPath;
 
             fE5Root = Path.GetFullPath(Path.Combine(Path.Combine(Path.Combine(Path.GetDirectoryName(lPath),
-                "..\\..\\.."), "TestScripts"), "es5conform"));
+                "..\\..\\..\\.."), "TestScripts"), "es5conform"));
 
             fTestRoot = Path.Combine(fE5Root, "TestCases");
 

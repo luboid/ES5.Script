@@ -1,210 +1,28 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E0FAA0B4-8F71-475C-B886-1190FE1459C6}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ES5.Script</RootNamespace>
-    <AssemblyName>ES5.Script</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
-    <ResolveNuGetPackages>false</ResolveNuGetPackages>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="EcmaScriptComponent.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="EcmaScript\BinaryOperator.cs" />
-    <Compile Include="EcmaScript\Bindings\ShiftOperators.cs" />
-    <Compile Include="EcmaScript\Bindings\RelationalOperators.cs" />
-    <Compile Include="EcmaScript\Bindings\PrePostfixOperators.cs" />
-    <Compile Include="EcmaScript\Bindings\MultiplicativeOperators.cs" />
-    <Compile Include="EcmaScript\Bindings\UnaryOperators.cs" />
-    <Compile Include="EcmaScript\Bindings\BitwiseOperators.cs" />
-    <Compile Include="EcmaScript\Bindings\AdditiveOperators.cs" />
-    <Compile Include="EcmaScript\Bindings\Operators.cs" />
-    <Compile Include="EcmaScript\Bindings\SimpleType.cs" />
-    <Compile Include="EcmaScript\CodeDelegate.cs" />
-    <Compile Include="EcmaScript\DeclarativeEnvironmentRecord.cs" />
-    <Compile Include="EcmaScript\DynamicMethods.cs" />
-    <Compile Include="EcmaScript\EcmaScriptCompiler.cs" />
-    <Compile Include="EcmaScript\EcmaScriptCompilerOptions.cs" />
-    <Compile Include="EcmaScript\EcmaScriptErrorKind.cs" />
-    <Compile Include="EcmaScript\EcmaScriptException.cs" />
-    <Compile Include="EcmaScript\EcmaScriptObjectWrapper.cs" />
-    <Compile Include="EcmaScript\EcmaScriptScope.cs" />
-    <Compile Include="EcmaScript\ElementType.cs" />
-    <Compile Include="EcmaScript\EnvironmentRecord.cs" />
-    <Compile Include="EcmaScript\ExecutionContext.cs" />
-    <Compile Include="EcmaScript\ExecutionStep.cs" />
-    <Compile Include="EcmaScript\FinallyInfo.cs" />
-    <Compile Include="EcmaScript\InternalDelegate.cs" />
-    <Compile Include="EcmaScript\InternalFunctionDelegate.cs" />
-    <Compile Include="EcmaScript\Internal\ArrayAccessExpression.cs" />
-    <Compile Include="EcmaScript\Internal\ArrayLiteralExpression.cs" />
-    <Compile Include="EcmaScript\Internal\BinaryExpression.cs" />
-    <Compile Include="EcmaScript\Internal\BlockStatement.cs" />
-    <Compile Include="EcmaScript\Internal\CatchBlock.cs" />
-    <Compile Include="EcmaScript\Internal\CommaSeparatedExpression.cs" />
-    <Compile Include="EcmaScript\Internal\ConditionalExpression.cs" />
-    <Compile Include="EcmaScript\Internal\DebuggerStatement.cs" />
-    <Compile Include="EcmaScript\Internal\ExpressionStatement.cs" />
-    <Compile Include="EcmaScript\Internal\FunctionExpression.cs" />
-    <Compile Include="EcmaScript\Internal\ProgramElement.cs" />
-    <Compile Include="EcmaScript\Internal\ObjectLiteralExpression.cs" />
-    <Compile Include="EcmaScript\Internal\PropertyAssignment.cs" />
-    <Compile Include="EcmaScript\Internal\RegExExpression.cs" />
-    <Compile Include="EcmaScript\Internal\StringExpression.cs" />
-    <Compile Include="EcmaScript\Internal\DecimalExpression.cs" />
-    <Compile Include="EcmaScript\Internal\IntegerExpression.cs" />
-    <Compile Include="EcmaScript\Internal\BooleanExpression.cs" />
-    <Compile Include="EcmaScript\Internal\BreakStatement.cs" />
-    <Compile Include="EcmaScript\Internal\CallExpression.cs" />
-    <Compile Include="EcmaScript\Internal\CaseClause.cs" />
-    <Compile Include="EcmaScript\Internal\ContinueStatement.cs" />
-    <Compile Include="EcmaScript\Internal\DebugSink.cs" />
-    <Compile Include="EcmaScript\Internal\DoStatement.cs" />
-    <Compile Include="EcmaScript\Internal\IdentifierExpression.cs" />
-    <Compile Include="EcmaScript\Internal\LiteralExpression.cs" />
-    <Compile Include="EcmaScript\Internal\NullExpression.cs" />
-    <Compile Include="EcmaScript\Internal\PropertyBaseExpression.cs" />
-    <Compile Include="EcmaScript\Internal\ThisStatement.cs" />
-    <Compile Include="EcmaScript\Internal\EmptyStatement.cs" />
-    <Compile Include="EcmaScript\Internal\ExpressionElement.cs" />
-    <Compile Include="EcmaScript\Internal\ForInStatement.cs" />
-    <Compile Include="EcmaScript\Internal\ForStatement.cs" />
-    <Compile Include="EcmaScript\Internal\FunctionDeclarationElement.cs" />
-    <Compile Include="EcmaScript\Internal\FunctionDeclarationType.cs" />
-    <Compile Include="EcmaScript\Internal\IfStatement.cs" />
-    <Compile Include="EcmaScript\Internal\IterationStatement.cs" />
-    <Compile Include="EcmaScript\Internal\LabelledStatement.cs" />
-    <Compile Include="EcmaScript\Internal\LanguageElement.cs" />
-    <Compile Include="EcmaScript\Internal\NewExpression.cs" />
-    <Compile Include="EcmaScript\Internal\ParameterDeclaration.cs" />
-    <Compile Include="EcmaScript\Internal\ReturnStatement.cs" />
-    <Compile Include="EcmaScript\Internal\Statement.cs" />
-    <Compile Include="EcmaScript\Internal\SourceElement.cs" />
-    <Compile Include="EcmaScript\Internal\SubExpression.cs" />
-    <Compile Include="EcmaScript\Internal\SwitchStatement.cs" />
-    <Compile Include="EcmaScript\Internal\ThrowStatement.cs" />
-    <Compile Include="EcmaScript\Internal\TryStatement.cs" />
-    <Compile Include="EcmaScript\Internal\UnaryExpression.cs" />
-    <Compile Include="EcmaScript\Internal\VariableDeclaration.cs" />
-    <Compile Include="EcmaScript\Internal\VariableStatement.cs" />
-    <Compile Include="EcmaScript\Internal\WhileStatement.cs" />
-    <Compile Include="EcmaScript\Internal\WithStatement.cs" />
-    <Compile Include="EcmaScript\ITokenizer.cs" />
-    <Compile Include="EcmaScript\ObjectEnvironmentRecord.cs" />
-    <Compile Include="EcmaScript\Objects\Array\EcmaScriptArrayObject.cs" />
-    <Compile Include="EcmaScript\Objects\Array\EcmaScriptArrayObjectObject.cs" />
-    <Compile Include="EcmaScript\Objects\Array\GlobalObject.cs" />
-    <Compile Include="EcmaScript\Objects\Boolean\EcmaScriptBooleanObject.cs" />
-    <Compile Include="EcmaScript\Objects\Boolean\GlobalObject.cs" />
-    <Compile Include="EcmaScript\Objects\Date\EcmaScriptDateObject.cs" />
-    <Compile Include="EcmaScript\Objects\Date\GlobalObject.cs" />
-    <Compile Include="EcmaScript\Objects\Arguments\EcmaScriptArgumentObject.cs" />
-    <Compile Include="EcmaScript\Objects\Error\EcmaScriptExceptionFunctionObject.cs" />
-    <Compile Include="EcmaScript\Objects\Error\GlobalObject.cs" />
-    <Compile Include="EcmaScript\Objects\Error\NativeErrorType.cs" />
-    <Compile Include="EcmaScript\Objects\Function\EcmaScriptBaseFunctionObject.cs" />
-    <Compile Include="EcmaScript\Objects\EcmaScriptEvalFunctionObject.cs" />
-    <Compile Include="EcmaScript\Objects\Object\EcmaScriptObject.cs" />
-    <Compile Include="EcmaScript\Objects\EcmaScriptObjectObject.cs" />
-    <Compile Include="EcmaScript\Objects\Function\EcmaScriptBoundFunctionObject.cs" />
-    <Compile Include="EcmaScript\Objects\Function\EcmaScriptFunctionObject.cs" />
-    <Compile Include="EcmaScript\Objects\Function\EcmaScriptInternalFunctionObject.cs" />
-    <Compile Include="EcmaScript\Objects\Function\GlobalObject.cs" />
-    <Compile Include="EcmaScript\Objects\GlobalObject.cs" />
-    <Compile Include="EcmaScript\Objects\IDebugSink.cs" />
-    <Compile Include="EcmaScript\Objects\JSON\GlobalObject.cs" />
-    <Compile Include="EcmaScript\Objects\JSON\JSON.cs" />
-    <Compile Include="EcmaScript\Objects\Math\GlobalObject.cs" />
-    <Compile Include="EcmaScript\Objects\Number\EcmaScriptNumberObject.cs" />
-    <Compile Include="EcmaScript\Objects\Number\GlobalObject.cs" />
-    <Compile Include="EcmaScript\Objects\Object\PropertyValues.cs" />
-    <Compile Include="EcmaScript\Objects\PrimitiveType.cs" />
-    <Compile Include="EcmaScript\Objects\Object\PropertyAttributes.cs" />
-    <Compile Include="EcmaScript\Objects\Object\PropertyValue.cs" />
-    <Compile Include="EcmaScript\Objects\RegExp\EcmaScriptRegexpObject.cs" />
-    <Compile Include="EcmaScript\Objects\RegExp\GlobalObject.cs" />
-    <Compile Include="EcmaScript\Objects\String\EcmaScriptStringObject.cs" />
-    <Compile Include="EcmaScript\Objects\String\GlobalObject.cs" />
-    <Compile Include="EcmaScript\Objects\Undefined.cs" />
-    <Compile Include="EcmaScript\Objects\Utilities.cs" />
-    <Compile Include="EcmaScript\Overloads.cs" />
-    <Compile Include="EcmaScript\Parser.cs" />
-    <Compile Include="EcmaScript\ParserError.cs" />
-    <Compile Include="EcmaScript\ParserErrorKind.cs" />
-    <Compile Include="EcmaScript\Reference.cs" />
-    <Compile Include="EcmaScript\ScriptParsingException.cs" />
-    <Compile Include="EcmaScript\Tokenizer.cs" />
-    <Compile Include="EcmaScript\TokenizerError.cs" />
-    <Compile Include="EcmaScript\TokenizerErrorKind.cs" />
-    <Compile Include="EcmaScript\TokenKind.cs" />
-    <Compile Include="EcmaScript\UnaryOperator.cs" />
-    <Compile Include="ParserErrorKind.cs" />
-    <Compile Include="ParserMessage.cs" />
-    <Compile Include="Position.cs" />
-    <Compile Include="PositionPair.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="ScriptComponent.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="SyntaxErrorException.cs" />
-    <Compile Include="ScriptAbortException.cs" />
-    <Compile Include="ScriptComponentException.cs" />
-    <Compile Include="ScriptDebugEventArgs.cs" />
-    <Compile Include="ScriptDebugExitScopeEventArgs.cs" />
-    <Compile Include="ScriptException.cs" />
-    <Compile Include="ScriptRuntimeException.cs" />
-    <Compile Include="ScriptScope.cs" />
-    <Compile Include="ScriptStackFrame.cs" />
-    <Compile Include="ScriptStatus.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PreBuildEvent>del /s/q $(ProjectDir)obj\*.*</PreBuildEvent>
-  </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net48;net6.0</TargetFrameworks>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<RootNamespace>ES5.Script</RootNamespace>
+		<AssemblyName>ES5.Script</AssemblyName>
+		<Copyright>Copyright © 2015</Copyright>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Update="Properties\Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+		<EmbeddedResource Update="Properties\Resources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+		<Exec Command="rem del /s/q $(ProjectDir)obj\*.*" />
+	</Target>
+
 </Project>

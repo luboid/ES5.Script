@@ -1,6 +1,4 @@
 ﻿using ES5.Script;
-//using RemObjects.Script.EcmaScript;
-//using RemObjects.Script;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,14 +20,8 @@ namespace es5Conform
         static Program()
         {
             fPath = Path.GetDirectoryName(new Uri(typeof(Program).Assembly.EscapedCodeBase).LocalPath);
-#if NETCOREAPP2_0
-            fE5Root = "..\\..\\..\\..";
-#else
-            fE5Root = "..\\..\\..";
-#endif
-
             fE5Root = Path.GetFullPath(Path.Combine(Path.Combine(Path.Combine(fPath,
-                fE5Root), "TestScripts"), "es5conform"));
+                 "..\\..\\..\\.."), "TestScripts"), "es5conform"));
 
             fTestRoot = Path.Combine(fE5Root, "TestCases");
 

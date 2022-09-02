@@ -28,7 +28,7 @@ namespace Test
             }
         }
 
-        [Fact(Skip = "temporarily")]
+        [Fact]
         public void Test_Date_Counstructor()
         {
             using (var engine = new EcmaScriptComponent())
